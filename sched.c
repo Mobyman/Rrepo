@@ -1,40 +1,46 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include"iostream"
+#include"cstdio"
+#include"cstdlib"
+#include"fstream"
 
-struct task{
+using namespace std;
+
+typedef struct{
 	
-	int rank, exectime, starttime, firstproc;
+	int rank;
+	int exectime;
 	
-};
+}task;
 
 int nprocs, ntasks;
-struct task *tasks;
+task *tasks;
 
 void load_taskset(const char *filename){
 	
-	FILE *fin;
 	int i;
-	fin = fopen(filename, "r");
-	fscanf(fin, "%d", &ntasks);
+	ifstream inFile;
+	inFile.open(filename);
 	
-	tasks = malloc(sizeof(*tasks)*ntasks);
+	inFile >> ntasks;
+	tasks = (task*)malloc(sizeof(*tasks)*ntasks);
 	for(i = 0; i < ntasks; i++){
 		
-		fscanf(fin, "%d", tasks[i].exectime);
-		fscanf(fin, "%d", tasks[i].rank);
-
+		inFile >> tasks[i].exectime >> tasks[i].rank;
+		cout << "ok" << endl;
 	}
 }
  
 int main(int argc, char **argv){
 
-	if(argc < 4){		
-		fprintf(stderr, "Usage: sched <n> <taskset> <alg> \n");
+	if(argc < 2){		
+		fprintf(stderr, "Usage: sched <taskset> \n");
 		exit(1);	
 	}
 	
 	nprocs = atoi(argv[1]);
 	load_taskset(argv[2]);
+	for(int i = 0; i < ntasks; i++)
+		cout << tasks[i].exectime << " " << tasks[i].rank << endl;
 	return 0;
 
 }

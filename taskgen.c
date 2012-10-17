@@ -19,14 +19,16 @@ int main(int argc, char **argv){
 	n = atoi(argv[1]);
 	m = atoi(argv[2]);
 
+	outFile << m << endl;
+
+	for(i = 0; i < m; i++){
 	
-		for(i = 0; i < m; i++){
-	
-			t = rand()%100 + 1;
-			r = rand()%n + 1;
-			outFile << t << " " << r << endl; 
+		t = rand()%100 + 1;
+		r = rand()%n + 1;
+		outFile << t << " " << r << endl; 
 					
-		}
+	}
+
 	outFile.close();
 	return 0;
 }
