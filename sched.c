@@ -2,6 +2,7 @@
 #include"cstdio"
 #include"cstdlib"
 #include"fstream"
+#include"cstring"
 
 using namespace std;
 
@@ -14,20 +15,24 @@ typedef struct{
 
 int nprocs, ntasks;
 task *tasks;
+string buff;
 
 void load_taskset(const char *filename){
 	
 	int i;
 	ifstream inFile;
 	inFile.open(filename);
-	
-	inFile >> ntasks;
+	getline(inFile, buff);
+	ntasks = atoi(buff.c_str());
 	tasks = (task*)malloc(sizeof(*tasks)*ntasks);
 	for(i = 0; i < ntasks; i++){
 		
 		inFile >> tasks[i].exectime >> tasks[i].rank;
-		cout << "ok" << endl;
+
 	}
+
+	inFile.close();
+
 }
  
 int main(int argc, char **argv){
@@ -36,9 +41,7 @@ int main(int argc, char **argv){
 		fprintf(stderr, "Usage: sched <taskset> \n");
 		exit(1);	
 	}
-	
-	nprocs = atoi(argv[1]);
-	load_taskset(argv[2]);
+	load_taskset(argv[1]);
 	for(int i = 0; i < ntasks; i++)
 		cout << tasks[i].exectime << " " << tasks[i].rank << endl;
 	return 0;
