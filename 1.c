@@ -25,7 +25,7 @@ void CountingSort(task* tosort, int size){
 	//rewriting the array with sorted values	
 	for(i = 1; i < 101; i++)
 		if(!count[i].empty())
-			for(it = count[i].begin(); it != count[i].end(); it++){
+			for(it = count[i].begin(); it != count[i].end(); ++it){ 
 				tosort[counter] = {*it, i};
 				counter++;
 			}
